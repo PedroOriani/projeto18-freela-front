@@ -8,7 +8,7 @@ export default function Footer(){
     return(
         <SCContainer>
             <SCHome />
-            <SCTitle>Cansei ja Porra</SCTitle>
+            <SCTitle>E - Market</SCTitle>
             <SCMyProducts />
         </SCContainer>
     );
@@ -18,7 +18,7 @@ const SCContainer = styled.div`
     width: 100%;
     height: 70px;
 
-    background-color: #ff087f;
+    background-color: #ffffff;
 
     display: flex;
     align-items: center;
@@ -28,12 +28,15 @@ const SCContainer = styled.div`
 
     position: fixed;
     bottom: 0px;
+    left: 0px;
 
     z-index: 10;
+
+    box-shadow: 2px -50px 500px 30px #9400d3;
 `
 
 const SCTitle = styled.h1`
-    color: #ffffff;
+    color: black;
 
     font-size: 25px;
 `
@@ -42,12 +45,12 @@ const SCHome = styled(GoHomeFill)`
     width: 30px;
     height: 30px;
 
-    color: #ffffff;
+    color: black;
 `
 
 const SCMyProducts = styled(RiAccountBoxFill)`
     width: 30px;
     height: 30px;
 
-    color: #ffffff;
+    color: black;
 `

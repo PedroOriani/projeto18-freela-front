@@ -11,14 +11,12 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Header />
       <Routes>
         <Route path='/' element={<HomePage />}/>
         <Route path='/signup' element={<SignUp />}/>
         <Route path='/signin' element={<SignIn />}/>
         <Route path='/product' element={<Product />}/>
       </Routes>
-      <Footer />
     </BrowserRouter>
   )
 }
