@@ -2,14 +2,22 @@ import styled from 'styled-components';
 import { BiLogOut } from 'react-icons/bi';
 import { GoHomeFill } from 'react-icons/go';
 import { RiAccountBoxFill } from 'react-icons/ri';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Footer(){
+
+    const navigateTo = useNavigate();
+
+    function goToAccount(){
+        navigateTo('/user')
+    }
+
     return(
         <SCContainer>
             <SCHome />
             <SCTitle>E - Market</SCTitle>
-            <SCMyProducts />
+            <SCMyAccount onClick={goToAccount}/>
         </SCContainer>
     );
 }
@@ -32,7 +40,7 @@ const SCContainer = styled.div`
 
     z-index: 10;
 
-    box-shadow: 2px -50px 500px 30px #9400d3;
+    box-shadow: 2px 2px 20px 4px rgba(0, 0, 0, 0.2);
 `
 
 const SCTitle = styled.h1`
@@ -48,9 +56,13 @@ const SCHome = styled(GoHomeFill)`
     color: black;
 `
 
-const SCMyProducts = styled(RiAccountBoxFill)`
+const SCMyAccount = styled(RiAccountBoxFill)`
     width: 30px;
     height: 30px;
 
     color: black;
+
+    &:hover{
+
+    }
 `

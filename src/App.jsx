@@ -4,8 +4,7 @@ import HomePage from './pages/HomePage';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import Product from './pages/Product';
-import Footer from './components/Footer';
-import Header from './components/Header';
+import User from './pages/User';
 
 function App() {
 
@@ -15,7 +14,8 @@ function App() {
         <Route path='/' element={<HomePage />}/>
         <Route path='/signup' element={<SignUp />}/>
         <Route path='/signin' element={<SignIn />}/>
-        <Route path='/product' element={<Product />}/>
+        <Route path='/product/:id' element={<Product />}/>
+        <Route path='/user' element={<User />}/>
       </Routes>
     </BrowserRouter>
   )
