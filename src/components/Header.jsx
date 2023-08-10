@@ -1,6 +1,6 @@
 import { styled } from "styled-components"
 import { BiLogOut } from 'react-icons/bi'
-import logo from '../assets/shoppingCart.png'
+import logo from '../assets/logo.png'
 import { Link } from "react-router-dom";
 
 export default function Header(){
@@ -13,7 +13,7 @@ export default function Header(){
         <SCContainer>
             {token === 1 ? 
             <SCSubContainer><SCLogo src={logo}/><SCWelcome>Bem vindo, {nome}</SCWelcome><SCLogOut /></SCSubContainer> : 
-            <SCSubContainer><SCLogo src={logo}/><SCWelcome>Bem vindo</SCWelcome><SCSign>Log-In</SCSign></SCSubContainer>}            
+            <SCSubContainer><SCLogo src={logo}/><SCWelcome>Bem vindo</SCWelcome><SCSign to={'/signin'}>Log-In</SCSign></SCSubContainer>}            
         </SCContainer>
     ); 
 }
@@ -44,6 +44,10 @@ const SCLogo = styled.img`
     height: 60px;
 
     margin-bottom: 10px;
+
+    &hover{
+        transform: scale()
+    }
 `
 
 const SCWelcome = styled.p`
@@ -70,7 +74,7 @@ const SCSubContainer = styled.div`
     justify-content: space-between;
 `
 
-const SCSign = styled.button`
+const SCSign = styled(Link)`
     width: 90px;
     height: 40px;
 
@@ -81,5 +85,7 @@ const SCSign = styled.button`
     font-size: 15px;
 
     border: 2px solid white;
-    border-radius: 5px; 
+    border-radius: 5px;
+
+    text-decoration: none;
 `
