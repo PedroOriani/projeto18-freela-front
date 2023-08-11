@@ -3,12 +3,21 @@ import { AiOutlineCloseCircle } from 'react-icons/ai'
 import close from '../assets/close.png'
 
 export default function AddProduct(){
+
+    function closeSubPage(){
+        console.log('fechou');
+    }
+
     return(
         <SCContainer>
             <SCForm>
                 <p>Adicionar Produto</p>
+                <SCInput />
+                <SCInput />
+                <SCInput />
+                <SCInput />
             </SCForm>
-            <SCCloseImage src={close} />
+            <SCCloseImage src={close} onClick={closeSubPage}/>
         </SCContainer>
     );
 }
@@ -37,9 +46,11 @@ const SCForm = styled.form`
     border-radius: 15px;
 
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 
-    padding: 10px;
+    padding: 30px;
 
     position: relative;
 
@@ -49,6 +60,10 @@ const SCForm = styled.form`
         font-weight: 700;
 
         color: #474a51;
+
+        text-decoration: underline;
+
+        top: 0px;
     }
 `
 
@@ -58,7 +73,18 @@ const SCCloseImage = styled.img`
 
     position: absolute;
     top: 0px;
-    left: 290px;
+    left: 293px;
 
     cursor: pointer;
+`
+
+const SCInput = styled.input`
+    width: 200px;
+    height: 30px;
+
+    border: 1px solid #474a51;
+
+    border-radius: 5px;
+
+    color: #474a51;
 `
