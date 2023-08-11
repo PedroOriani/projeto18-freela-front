@@ -12,9 +12,5 @@ const GlobalStyle = createGlobalStyle`
     *{
         box-sizing: border-box;
     }
-
-    body{
-        background-color: #b1f2ff;
-    }
 `
 export default GlobalStyle

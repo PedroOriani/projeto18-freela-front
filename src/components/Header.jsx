@@ -13,7 +13,7 @@ export default function Header(){
         <SCContainer>
             {token === 1 ? 
             <SCSubContainer><SCLogo src={logo}/><SCWelcome>Bem vindo, {nome}</SCWelcome><SCLogOut /></SCSubContainer> : 
-            <SCSubContainer><SCLogo src={logo}/><SCWelcome>Bem vindo</SCWelcome><SCSign to={'/signin'}>Log-In</SCSign></SCSubContainer>}            
+            <SCSubContainer><SCLogo src={logo}/><SCWelcome>E - Market</SCWelcome><SCSign to={'/signin'}>Sign In</SCSign></SCSubContainer>}            
         </SCContainer>
     ); 
 }
@@ -22,13 +22,15 @@ const SCContainer = styled.div`
     width: 100%;
     height: 70px;
 
-    background-color: #ffffff;
+    background-color: #f5f5f5;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
     padding: 0 20px 0 20px;
+
+    border-radius: 10px;
 
     position: fixed;
     top: 0px;
@@ -46,13 +48,15 @@ const SCLogo = styled.img`
 
     margin-bottom: 10px;
 
-    &hover{
-        transform: scale()
+    cursor: pointer;
+
+    &:hover{
+        transform: scale(1.1)
     }
 `
 
 const SCWelcome = styled.p`
-    color: black;
+    color: #d19300;
 
     font-weight: 300;
     font-size: 25px;
@@ -65,7 +69,11 @@ const SCLogOut = styled(BiLogOut)`
     width: 30px;
     height: 30px;
 
-    color: black;
+    color: #474a51;
+
+    &:hover{
+        transform: scale(1.1)
+    }
 `
 
 const SCSubContainer = styled.div`
@@ -76,17 +84,24 @@ const SCSubContainer = styled.div`
 `
 
 const SCSign = styled(Link)`
-    width: 90px;
+    width: 60px;
     height: 40px;
 
-    background-color: white;
+    color: #474a51;
 
-    color: black;
+    font-family: 'Montserrat', sans-serif;
     font-weight: bold;
-    font-size: 15px;
+    font-size: 16px;
 
-    border: 2px solid white;
     border-radius: 5px;
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     text-decoration: none;
+
+    &:hover{
+        transform: scale(1.1)
+    }
 `

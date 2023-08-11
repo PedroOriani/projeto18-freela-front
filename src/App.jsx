@@ -4,7 +4,7 @@ import HomePage from './pages/HomePage';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import Product from './pages/Product';
-import User from './pages/User';
+import MyProducts from './pages/MyProducts';
 
 function App() {
 
@@ -15,7 +15,7 @@ function App() {
         <Route path='/signup' element={<SignUp />}/>
         <Route path='/signin' element={<SignIn />}/>
         <Route path='/product/:id' element={<Product />}/>
-        <Route path='/user' element={<User />}/>
+        <Route path='/products/me' element={<MyProducts />}/>
       </Routes>
     </BrowserRouter>
   )

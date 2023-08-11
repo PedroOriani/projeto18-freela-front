@@ -41,6 +41,13 @@ export default function SignUp(){
                         onChange={e => setEmail(e.target.value)}
                     />
                     <SCInput
+                        name="phone"
+                        placeholder="Phone"
+                        type="tel"
+                        value={phone}
+                        onChange={e => setPhone(e.target.value)}
+                    />
+                    <SCInput
                         name="password"
                         placeholder="Password"
                         type="password"
@@ -54,14 +61,7 @@ export default function SignUp(){
                         value={confirmPassword}
                         onChange={e => setConfirmPassword(e.target.value)}
                     />
-                    <SCInput
-                        name="phone"
-                        placeholder="Phone"
-                        type="tel"
-                        value={phone}
-                        onChange={e => setPhone(e.target.value)}
-                    />
-                    <SCInput
+                    <SCSubmit style={{cursor: 'pointer'}}
                         value="Register"
                         type="submit"
                     />
@@ -79,6 +79,8 @@ const SCContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    background-color: #eeeeee;
 `
 
 const SCTitle = styled.p`
@@ -112,7 +114,7 @@ const SCForm = styled.form`
     align-items: center;
     justify-content: space-between;
 
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 `
 
 const SCInput = styled.input`
@@ -122,7 +124,7 @@ const SCInput = styled.input`
     border-top: none;
     border-right: none;
     border-left: none;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid #474a51;
 
     outline: none;
 
@@ -132,23 +134,47 @@ const SCInput = styled.input`
 
     color: black;
 
-    font-weight: 200;
+    font-weight: 400;
     font-size: 15px;
-    font-family: 'RetroVintage';
+    font-family: 'Montserrat', sans-serif;
+
+    margin-bottom: 15px;
+`
+
+const SCSubmit = styled.input`
+    width: 200px;
+    height: 30px;
+
+    background: #474a51;
+
+    border: 2px solid #474a51;
+    border-radius: 15px;
+
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+
+    color: #ffffff;
+
+    box-shadow: 1px 1px 10px 0.5px #474a51;
+
+    margin-top: 10px;
+
+    box-shadow: none;
 `
 
 const SCAccount = styled.p`
-    font-weight: 200;
+    font-weight: 500;
     font-size: 15px;
-    font-family: 'RetroVintage';
+    font-family: 'Montserrat', sans-serif;
 `
 
 const SCSignIn = styled(Link)`
     text-decoration: none;
 
-    font-weight: 200;
+    font-weight: 600;
     font-size: 15px;
-    font-family: 'RetroVintage';
+    font-family: 'Montserrat', sans-serif;
 
     color: darkblue;
 `

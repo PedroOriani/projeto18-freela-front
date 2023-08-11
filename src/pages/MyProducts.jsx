@@ -1,4 +1,4 @@
-export default function User(){
+export default function MyProducts(){
     return(
         <p>User</p>
     );
