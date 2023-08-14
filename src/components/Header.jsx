@@ -2,6 +2,7 @@ import { styled } from "styled-components"
 import { BiLogOut } from 'react-icons/bi'
 import logo from '../assets/logo.png'
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Header(){
 
@@ -11,14 +12,27 @@ export default function Header(){
         navigateTo('/')
     }
 
-    const nome = 'Pedro'
+    const token = JSON.parse(sessionStorage.getItem("token"));
+    const name = JSON.parse(sessionStorage.getItem("name"));
 
-    const token = 0; 
+    const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+    function logOut(){
+        const promise = axios.post(`${import.meta.env.VITE_API_URL}/logout`, config)
+        promise.then(resposta => {
+            navigateTo('/signin')
+        })
+        promise.catch((erro) => alert(erro.response.data))
+    }
 
     return(
         <SCContainer>
-            {token === 1 ? 
-            <SCSubContainer><SCLogo src={logo} onClick={goHome}/><SCWelcome>Bem vindo, {nome}</SCWelcome><SCLogOut /></SCSubContainer> : 
+            {token ? 
+            <SCSubContainer><SCLogo src={logo} onClick={goHome}/><SCWelcome>Bem vindo, {name}</SCWelcome><SCLogOut onClick={logOut}/></SCSubContainer> : 
             <SCSubContainer><SCLogo src={logo} onClick={goHome}/><SCWelcome>E - Market</SCWelcome><SCSign to={'/signin'}>Sign In</SCSign></SCSubContainer>}            
         </SCContainer>
     ); 

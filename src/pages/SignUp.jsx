@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import logo from '../assets/logo.png'
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import axios from 'axios'
 
 
 export default function SignUp(props){
@@ -14,7 +15,7 @@ export default function SignUp(props){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [CPF, setCPF] = useState("");
+    const [cpf, setCpf] = useState("");
     const [phone, setPhone] = useState("");
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
@@ -26,7 +27,29 @@ export default function SignUp(props){
     function register(e){
         e.preventDefault();
 
-        navigateTo('/signin')
+        if (password === confirmPassword){
+
+            const userData = {
+              name: name,
+              email: email,
+              password: password,
+              confirmPassword: confirmPassword,
+              cpf: cpf,
+              phone: phone,
+              city: city,
+              state: state
+            }
+
+        const promise = axios.post(`${import.meta.env.VITE_API_URL}/signup`, userData)
+        promise.then(resposta => {
+            alert(resposta.data)
+            navigateTo('/signin')
+        })
+        promise.catch((erro) => alert(erro.response.data))
+
+        }else{
+            alert("As senhas digitadas estão diferentes")
+        }
     }
 
     return(
@@ -57,11 +80,11 @@ export default function SignUp(props){
                         onChange={e => setPhone(e.target.value)}
                     />
                     <SCInput
-                        name="CPF"
-                        placeholder="CPF"
+                        name="cpf"
+                        placeholder="cpf"
                         type="text"
-                        value={CPF}
-                        onChange={e => setCPF(e.target.value)}
+                        value={cpf}
+                        onChange={e => setCpf(e.target.value)}
                     />
                     <SCInput
                         name="city"

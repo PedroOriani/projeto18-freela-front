@@ -5,23 +5,37 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { FaTrashAlt } from 'react-icons/fa'
 import AddProduct from "../components/AddProduct";
+import axios from "axios";
+
 
 export default function MyProducts(props){
 
     const { add, setAdd } = props
 
-    const [products, setProducts] = useState([
-        {id: 1, image:'https://img.freepik.com/fotos-gratis/imagem-aproximada-da-cabeca-de-um-lindo-leao_181624-35855.jpg?w=2000', name: 'Computador', subname: 'Samsung S20', price: 'R$ 35.00', phone: '(11) 982247801' },
-        {id: 2, image:'https://img.freepik.com/fotos-gratis/imagem-aproximada-da-cabeca-de-um-lindo-leao_181624-35855.jpg?w=2000', name: 'Leão', price: 'R$ 35.00', phone: 'new' },
-        {id: 3, image:'https://img.freepik.com/fotos-gratis/imagem-aproximada-da-cabeca-de-um-lindo-leao_181624-35855.jpg?w=2000', name: 'Leão', price: 'R$ 35.00', phone: 'new' },
-        {id: 4, image:'https://img.freepik.com/fotos-gratis/imagem-aproximada-da-cabeca-de-um-lindo-leao_181624-35855.jpg?w=2000', name: 'Leão', price: 'R$ 35.00', phone: 'new' },
-        {id: 5, image:'https://img.freepik.com/fotos-gratis/imagem-aproximada-da-cabeca-de-um-lindo-leao_181624-35855.jpg?w=2000', name: 'Leão', price: 'R$ 35.00', phone: 'new' },
-        {id: 6, image:'https://img.freepik.com/fotos-gratis/imagem-aproximada-da-cabeca-de-um-lindo-leao_181624-35855.jpg?w=2000', name: 'Leão', price: 'R$ 35.00', phone: 'new' }
-    ]);
+    const [products, setProducts] = useState([]);
+
+    const token = JSON.parse(sessionStorage.getItem("token"));
 
     useEffect(() => {
         setAdd(0);
     }, [])
+
+    const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+    function loadProducts() {
+        const promise = axios.get(`${import.meta.env.VITE_API_URL}/myproducts`, config)
+        promise.then(resposta => {
+            setProducts(resposta.data)
+            console.log(resposta.data)
+        })
+        promise.catch((erro) => alert(erro.response.data))
+    }
+
+    useEffect(loadProducts, [])
 
     return(
         <>
@@ -30,9 +44,9 @@ export default function MyProducts(props){
                 <SCMyProducts>My Products</SCMyProducts>
                 {products.map((p, i) => (
                     <SCProducts key={i} to={`/product/${p.id}`}>
-                        <SCProdImage src={p.image} />
+                        <SCProdImage src={p.photo} />
                         <SCContainerInfos>
-                            <h1>{p.name}</h1>
+                            <h1>{p.title}</h1>
                             <SCSubname>{p.subname}</SCSubname>
                             <p><SCSubtitle>Price: </SCSubtitle>{p.price}</p>
                             <p><SCSubtitle>Phone: </SCSubtitle>{p.phone}</p>
@@ -126,7 +140,7 @@ const SCContainerInfos = styled.div`
         color: black;
 
         font-family: 'Montserrat', sans-serif;
-        font-size: 20px;
+        font-size: 15px;
         font-weight: 700;
 
         margin-bottom: 5px;
@@ -143,10 +157,11 @@ const SCContainerInfos = styled.div`
 `
 
 const SCSubtitle = styled.span`
-    font-weight: 600;
+    font-weight: 700;
 `
 
 const SCSubname = styled.p`
+    color: #474a51;
     text-decoration: underline;
 `
 

@@ -4,23 +4,28 @@ import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AddProduct from "../components/AddProduct";
+import axios from "axios";
+
 
 export default function HomePage(props){
 
     const { add, setAdd } = props
     
-    const [products, setProducts] = useState([
-        {id: 1, image:'https://img.freepik.com/fotos-gratis/imagem-aproximada-da-cabeca-de-um-lindo-leao_181624-35855.jpg?w=2000', name: 'Notebook', subname: 'Samsung S20', price: 'R$ 35.00', phone: '(11) 982247801' },
-        {id: 2, image:'https://img.freepik.com/fotos-gratis/imagem-aproximada-da-cabeca-de-um-lindo-leao_181624-35855.jpg?w=2000', name: 'Máquina de Lavar Roupa', subname: 'Electrolux Essential Care 2022 Novo', price: 'R$ 35.00', phone: 'new' },
-        {id: 3, image:'https://img.freepik.com/fotos-gratis/imagem-aproximada-da-cabeca-de-um-lindo-leao_181624-35855.jpg?w=2000', name: 'MMMMM MMMM MMMMM M', price: 'R$ 35.00', phone: 'new' },
-        {id: 4, image:'https://img.freepik.com/fotos-gratis/imagem-aproximada-da-cabeca-de-um-lindo-leao_181624-35855.jpg?w=2000', name: 'Leão', price: 'R$ 35.00', phone: 'new' },
-        {id: 5, image:'https://img.freepik.com/fotos-gratis/imagem-aproximada-da-cabeca-de-um-lindo-leao_181624-35855.jpg?w=2000', name: 'Leão', price: 'R$ 35.00', phone: 'new' },
-        {id: 6, image:'https://img.freepik.com/fotos-gratis/imagem-aproximada-da-cabeca-de-um-lindo-leao_181624-35855.jpg?w=2000', name: 'Leão', price: 'R$ 35.00', phone: 'new' }
-    ]);
+    const [products, setProducts] = useState([]);
 
     useEffect(() => {
         setAdd(0);
     }, [])
+
+    function loadProducts() {
+        const promise = axios.get(`${import.meta.env.VITE_API_URL}/products`)
+        promise.then(resposta => {
+            setProducts(resposta.data)
+        })
+        promise.catch((erro) => alert(erro.response.data))
+    }
+
+    useEffect(loadProducts, [])
 
     return(
         <>
@@ -28,10 +33,10 @@ export default function HomePage(props){
                 <Header />
                 {products.map((p, i) => (
                     <SCProducts key={i} to={`/product/${p.id}`}>
-                        <SCProdImage src={p.image} />
+                        <SCProdImage src={p.photo} />
                         <SCContainerInfos>
-                            <h1>{p.name}</h1>
-                            <SCSubname>{p.subname}</SCSubname>
+                            <h1>{p.title}</h1>
+                            <SCSubname>{p.model}</SCSubname>
                             <p><SCSubtitle>Price: </SCSubtitle>{p.price}</p>
                             <p><SCSubtitle>Phone: </SCSubtitle>{p.phone}</p>
                         </SCContainerInfos>

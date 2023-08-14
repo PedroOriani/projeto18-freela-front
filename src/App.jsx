@@ -12,13 +12,13 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<HomePage add={add} setAdd={setAdd}/>}/>
-        <Route path='/signup' element={<SignUp setAdd={setAdd}/>}/>
-        <Route path='/signin' element={<SignIn setAdd={setAdd}/>}/>
-        <Route path='/product/:id' element={<Product setAdd={setAdd}/>}/>
-        <Route path='/products/me' element={<MyProducts add={add} setAdd={setAdd}/>}/>
-      </Routes>
+        <Routes>
+          <Route path='/' element={<HomePage add={add} setAdd={setAdd} />} />
+          <Route path='/signup' element={<SignUp setAdd={setAdd} />} />
+          <Route path='/signin' element={<SignIn setAdd={setAdd} />} />
+          <Route path='/product/:id' element={<Product setAdd={setAdd} />} />
+          <Route path='/products/me' element={<MyProducts add={add} setAdd={setAdd} />} />
+        </Routes>
     </BrowserRouter>
   )
 }

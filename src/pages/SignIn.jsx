@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import logo from '../assets/logo.png'
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function SignIn(props){
 
@@ -17,9 +18,24 @@ export default function SignIn(props){
     }, [])
 
     function logIn(e){
-        e.preventDefault()
+        e.preventDefault();
+        const body = {
+            email,
+            password
+        }
 
-        navigateTo('/')
+      const promise = axios.post(`${import.meta.env.VITE_API_URL}/signin`, body)
+
+        promise.then(resposta => {
+            sessionStorage.setItem('token', JSON.stringify(resposta.data.token));
+            sessionStorage.setItem('name', JSON.stringify(resposta.data.name));
+            navigateTo("/")
+        })
+        promise.catch(err => {
+            alert(err.response.data)
+            setEmail("")
+            setSenha("")
+        })
     }
 
     return(

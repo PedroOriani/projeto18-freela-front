@@ -12,15 +12,24 @@ export default function Footer(props){
 
     const navigateTo = useNavigate();
 
+    const token = JSON.parse(sessionStorage.getItem("token"));
+
     function goHome(){
         navigateTo('/')
     }
 
     function goToAccount(){
-        navigateTo('/products/me')
+        if (!token) {
+            navigateTo('/signin');
+        }else{
+            navigateTo('/products/me')
+        }
     }
 
     function addP(){
+        if (!token) {
+            navigateTo('/signin');
+        }
         if (add !== 3){
             setAdd(1)
         }
