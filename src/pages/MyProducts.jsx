@@ -33,7 +33,7 @@ export default function MyProducts(props){
         promise.then(resposta => {
             setProducts(resposta.data)
         })
-        promise.catch((erro) => alert(erro.response.data))
+        promise.catch((erro) => console.log(erro.response.data))
     }
 
     useEffect(loadProducts, [])
@@ -58,7 +58,10 @@ export default function MyProducts(props){
             <SCContainer add={add}>
                 <Header />
                 <SCMyProducts>My Products</SCMyProducts>
-                {products.map((p, i) => (
+                {products.length === 0 ? 
+                <SCNoProducts>Você não colocou nenhum produto a venda 😭</SCNoProducts> 
+                : 
+                products.map((p, i) => (
                     <SCProducts key={i}>
                         <SCProdImage src={p.photo} onClick={() => goToProduct(p.id)}/>
                         <SCContainerInfos>
@@ -106,6 +109,18 @@ const SCMyProducts = styled.p`
     color: #2c2f36;
 
     text-decoration: underline;
+`
+
+const SCNoProducts = styled.p`
+    width: 100%;
+    text-align: center;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 25px;
+    font-weight: 700;
+    margin-top: 25px;
+
+    color: #2c2f36;
 `
 
 const SCProducts = styled.div`
