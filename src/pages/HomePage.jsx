@@ -38,7 +38,7 @@ export default function HomePage(props){
                             <h1>{p.title}</h1>
                             <SCSubname>{p.model}</SCSubname>
                             <p><SCSubtitle>Price: </SCSubtitle>{p.price}</p>
-                            <p><SCSubtitle>Phone: </SCSubtitle>{p.phone}</p>
+                            <p>{p.phone}</p>
                         </SCContainerInfos>
                     </SCProducts>
                 ))}
@@ -112,17 +112,18 @@ const SCContainerInfos = styled.div`
         color: black;
 
         font-family: 'Montserrat', sans-serif;
-        font-size: 15px;
+        font-size: 18px;
         font-weight: 700;
 
-        margin-bottom: 5px;
+        margin-bottom: 10px;
+        margin-top: 10px;
     }
 
     p{
         color: black;
 
         font-family: 'Montserrat', sans-serif;
-        font-size: 13px;
+        font-size: 15px;
         font-weight: 300;
         margin-bottom: 20px;
     }

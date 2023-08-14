@@ -2,10 +2,13 @@ import { styled } from "styled-components";
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import close from '../assets/close.png'
 import { useState } from "react";
+import axios from "axios";
 
 export default function AddProduct(props){
 
     const { add, setAdd } = props
+
+    const token = JSON.parse(sessionStorage.getItem("token"));
 
     const [image, setImage] = useState("");
     const [title, setTitle] = useState("");
@@ -20,6 +23,31 @@ export default function AddProduct(props){
 
     function addProduct(e){
         e.preventDefault()
+
+        const body = {
+            photo: image,
+            title: title,
+            model: model,
+            description: description,
+            price: price,
+            quantity: quantity
+          }
+
+        const config = {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+        };
+
+        const promise = axios.post(`${import.meta.env.VITE_API_URL}/product`, body, config)
+
+        promise.then(resposta => {
+            setAdd(0);
+            location.reload()
+        })
+        promise.catch(err => {
+            alert(err.response.data)
+        })
     }
 
     return(

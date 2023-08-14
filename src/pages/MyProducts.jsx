@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -16,6 +16,8 @@ export default function MyProducts(props){
 
     const token = JSON.parse(sessionStorage.getItem("token"));
 
+    const navigateTo = useNavigate();
+
     useEffect(() => {
         setAdd(0);
     }, [])
@@ -24,18 +26,32 @@ export default function MyProducts(props){
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      };
+    };
 
     function loadProducts() {
         const promise = axios.get(`${import.meta.env.VITE_API_URL}/myproducts`, config)
         promise.then(resposta => {
             setProducts(resposta.data)
-            console.log(resposta.data)
         })
         promise.catch((erro) => alert(erro.response.data))
     }
 
     useEffect(loadProducts, [])
+
+    function deleteProduct(id){
+        if (confirm('Gostaria realmente de retirar este produto de venda?')) {
+            const promise = axios.delete(`${import.meta.env.VITE_API_URL}/product/${id}`, config)
+            promise.then(resposta => {
+                alert('Produto retirado')
+                location.reload();
+            })
+            promise.catch((erro) => alert(erro.response.data))
+        }
+    }
+
+    function goToProduct(id){
+        navigateTo(`/product/${id}`)
+    }
 
     return(
         <>
@@ -43,15 +59,14 @@ export default function MyProducts(props){
                 <Header />
                 <SCMyProducts>My Products</SCMyProducts>
                 {products.map((p, i) => (
-                    <SCProducts key={i} to={`/product/${p.id}`}>
-                        <SCProdImage src={p.photo} />
+                    <SCProducts key={i}>
+                        <SCProdImage src={p.photo} onClick={() => goToProduct(p.id)}/>
                         <SCContainerInfos>
-                            <h1>{p.title}</h1>
-                            <SCSubname>{p.subname}</SCSubname>
+                            <h1 onClick={() => goToProduct(p.id)}>{p.title}</h1>
+                            <SCSubname onClick={() => goToProduct(p.id)}>{p.model}</SCSubname>
                             <p><SCSubtitle>Price: </SCSubtitle>{p.price}</p>
-                            <p><SCSubtitle>Phone: </SCSubtitle>{p.phone}</p>
                         </SCContainerInfos>
-                        <SCDelete />
+                        <SCDelete onClick={() => deleteProduct(p.id)}/>
                     </SCProducts>
                 ))}
                 <Footer add={add} setAdd={setAdd}/>
@@ -93,7 +108,7 @@ const SCMyProducts = styled.p`
     text-decoration: underline;
 `
 
-const SCProducts = styled(Link)`
+const SCProducts = styled.div`
     width: 100%;
     height: 130px;
 
@@ -140,17 +155,19 @@ const SCContainerInfos = styled.div`
         color: black;
 
         font-family: 'Montserrat', sans-serif;
-        font-size: 15px;
+        font-size: 18px;
         font-weight: 700;
 
         margin-bottom: 5px;
+
+        margin-top: 10px;
     }
 
     p{
         color: black;
 
         font-family: 'Montserrat', sans-serif;
-        font-size: 13px;
+        font-size: 15px;
         font-weight: 300;
         margin-bottom: 20px;
     }
@@ -166,7 +183,7 @@ const SCSubname = styled.p`
 `
 
 const SCDelete = styled(FaTrashAlt)`
-    width: 10px;
+    width: 25px;
     
     position: absolute;
 
@@ -174,4 +191,6 @@ const SCDelete = styled(FaTrashAlt)`
 
     top: 5px;
     right: 5px;
+
+    z-index: 25;
 `

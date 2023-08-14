@@ -22,9 +22,10 @@ export default function Header(){
       };
 
     function logOut(){
-        const promise = axios.post(`${import.meta.env.VITE_API_URL}/logout`, config)
+        const promise = axios.post(`${import.meta.env.VITE_API_URL}/logout`,'',config)
         promise.then(resposta => {
-            navigateTo('/signin')
+            sessionStorage.clear();
+            navigateTo('/signin');
         })
         promise.catch((erro) => alert(erro.response.data))
     }

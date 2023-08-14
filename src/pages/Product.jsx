@@ -1,9 +1,10 @@
 import { styled } from "styled-components";
 import Footer from '../components/Footer';
 import Header from "../components/Header";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FiArrowLeft } from 'react-icons/fi'
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Product(props){
 
@@ -11,38 +12,36 @@ export default function Product(props){
 
     const navigateTo = useNavigate();
 
+    const params = useParams();
+
     useEffect(() => {
         setAdd(3);
     }, [])
 
-    function back(){
-        navigateTo('/')
+    const [product, setProduct] = useState([])
+  
+    function loadProduct() {
+        const promise = axios.get(`${import.meta.env.VITE_API_URL}/product/${params.id}`)
+        promise.then(resposta => {
+            console.log(resposta.data)
+            setProduct(resposta.data)
+        })
+        promise.catch((erro) => alert(erro.response.data))
     }
 
-    const product = {
-        id: 1,
-        image: 'https://img.freepik.com/fotos-gratis/imagem-aproximada-da-cabeca-de-um-lindo-leao_181624-35855.jpg?w=2000',
-        title: 'Máquina de Lavar Roupa',
-        model: 'Electrolux Essential Care 2022 Novo',
-        description: 'Notebook Multilaser Ultra UB240 preta 14.1", Intel Celeron N4020 4GB de RAM 128GB SSD, Intel UHD Graphics 600 1366x768px Windows 11 Home',
-        price: 'R$ 35.00',
-        quantity: 23,
-        owner: 'Pedro',
-        phone: '(11) 982247801',
-        adress: 'Itatiba - SP'
-    }
+    useEffect(loadProduct, [])
 
-    const price = product.price.replace('R$ ', '');
-    const numPrice = Number(price).toFixed(2);
+    // const price = product.price.replace('R$ ', '');
+    // const numPrice = Number(price).toFixed(2);
 
-    const parcela = 'R$ ' + ((numPrice + 5)/6).toFixed(2);
+    // const parcela = 'R$ ' + ((numPrice + 5)/6).toFixed(2);
 
-    const parcelaF = parcela.replace('.', ',');
+    // const parcelaF = parcela.replace('.', ',');
 
     return(
         <SCContainer>
             <Header />
-            <SCProduct onClick={back}>
+            <SCProduct>
                 <SCTitle>{product.title}</SCTitle>
                 <SCSubTitle>{product.model}</SCSubTitle>
                 <SCImage src={product.image} />
@@ -50,14 +49,14 @@ export default function Product(props){
                     <SCDivisor>
                         <div>
                             <SCPrice>{product.price}</SCPrice>
-                            <SCParcela>Em até 6x de {parcelaF}</SCParcela>
+                            <SCParcela>Em até 6x de {product.price}</SCParcela>
                         </div>
                         <SCQuantity>{product.quantity} items available</SCQuantity>
                     </SCDivisor>
                 <SCSeller>Vendido por {product.owner}</SCSeller>                
                 <SCContactData>
                     <SCContact>{product.phone}</SCContact>
-                    <SCAdress>{product.adress}</SCAdress>
+                    <SCAdress>{product.address}</SCAdress>
                 </SCContactData>
             </SCProduct>
             <Footer setAdd={setAdd} />
