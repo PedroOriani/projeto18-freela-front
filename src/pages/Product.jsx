@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { FiArrowLeft } from 'react-icons/fi'
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Swal from 'sweetalert2';
 
 export default function Product(props){
 
@@ -23,7 +24,7 @@ export default function Product(props){
         promise.then(resposta => {
             setProduct(resposta.data);
         })
-        promise.catch((erro) => alert(erro.response.data))
+        promise.catch((erro) => Swal.fire({title: erro.response.data}))
     }
 
     useEffect(loadProduct, [])
@@ -38,7 +39,7 @@ export default function Product(props){
                 <SCDescription>{product.description}</SCDescription>
                     <SCDivisor>
                         <SCPrice>{product.price}</SCPrice>                            
-                        <SCQuantity>{product.quantity} items available</SCQuantity>
+                        <SCQuantity>{product.quantity} {product.quantity === 1 ? 'item available' : 'items available'}</SCQuantity>
                     </SCDivisor>
                 <SCSeller>Vendido por {product.ownerName}</SCSeller>                
                 <SCContactData>

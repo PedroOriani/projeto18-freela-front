@@ -3,6 +3,7 @@ import logo from '../assets/logo.png'
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Swal from 'sweetalert2'
 
 export default function SignIn(props){
 
@@ -32,9 +33,13 @@ export default function SignIn(props){
             navigateTo("/")
         })
         promise.catch(err => {
-            alert(err.response.data)
+            Swal.fire({
+                icon: 'warning',
+                title: 'Algo está errado!',
+                text: err.response.data
+            })
             setEmail("")
-            setSenha("")
+            setPassword("")
         })
     }
 

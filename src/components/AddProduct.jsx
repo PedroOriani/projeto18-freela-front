@@ -3,6 +3,7 @@ import { AiOutlineCloseCircle } from 'react-icons/ai'
 import close from '../assets/close.png'
 import { useState } from "react";
 import axios from "axios";
+import Swal from 'sweetalert2';
 
 export default function AddProduct(props){
 
@@ -46,7 +47,7 @@ export default function AddProduct(props){
             location.reload()
         })
         promise.catch(err => {
-            alert(err.response.data)
+            Swal.fire({title: err.response.data})
         })
     }
 

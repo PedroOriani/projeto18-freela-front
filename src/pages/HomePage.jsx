@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import AddProduct from "../components/AddProduct";
 import axios from "axios";
 import loading from '../assets/loading.gif'
+import Swal from 'sweetalert2'
 
 
 export default function HomePage(props){
@@ -23,7 +24,11 @@ export default function HomePage(props){
         promise.then(resposta => {
             setProducts(resposta.data)
         })
-        promise.catch((erro) => alert(erro.response.data))
+        promise.catch((erro) => {
+            Swal.fire({
+                title: erro.response.data
+            })
+        })
     }
 
     useEffect(loadProducts, [])
@@ -49,7 +54,7 @@ export default function HomePage(props){
                             <h1>{p.title}</h1>
                             <SCSubname>{p.model}</SCSubname>
                             <p><SCSubtitle>Price: </SCSubtitle>{p.price}</p>
-                            <p>{p.phone}</p>
+                            <p>{p.quantity} {p.quantity === 1 ? 'item available' : 'items available'}</p>
                         </SCContainerInfos>
                     </SCProducts>
                 ))}
@@ -133,8 +138,7 @@ const SCContainerInfos = styled.div`
         font-size: 18px;
         font-weight: 700;
 
-        margin-bottom: 10px;
-        margin-top: 10px;
+        margin-bottom: 5px;
     }
 
     p{
@@ -143,7 +147,7 @@ const SCContainerInfos = styled.div`
         font-family: 'Montserrat', sans-serif;
         font-size: 15px;
         font-weight: 300;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
     }
 `
 

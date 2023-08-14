@@ -7,6 +7,7 @@ import { FaTrashAlt } from 'react-icons/fa'
 import AddProduct from "../components/AddProduct";
 import axios from "axios";
 import loadingGif from '../assets/loading.gif'
+import Swal from 'sweetalert2'
 
 
 export default function MyProducts(props){
@@ -45,14 +46,23 @@ export default function MyProducts(props){
     useEffect(loadProducts, [])
 
     function deleteProduct(id){
-        if (confirm('Gostaria realmente de retirar este produto de venda?')) {
-            const promise = axios.delete(`${import.meta.env.VITE_API_URL}/product/${id}`, config)
-            promise.then(resposta => {
-                alert('Produto retirado')
-                location.reload();
-            })
-            promise.catch((erro) => alert(erro.response.data))
-        }
+        (Swal.fire({
+            title: 'Quer mesmo tirar esse produto de venda?',
+            showDenyButton: true,
+            confirmButtonText: 'Delete',
+            denyButtonText: `Cancel`,
+            confirmButtonColor: 'red',
+            denyButtonColor: 'gray'
+          })).then ((result) => {
+            if (result.isConfirmed){
+                const promise = axios.delete(`${import.meta.env.VITE_API_URL}/product/${id}`, config)
+                promise.then(resposta => {
+                    alert('Produto retirado')
+                    location.reload();
+                })
+                promise.catch((erro) => Swal.fire({ title: erro.response.data}))
+            }
+          })       
     }
 
     function goToProduct(id){
@@ -84,6 +94,7 @@ export default function MyProducts(props){
                             <h1 onClick={() => goToProduct(p.id)}>{p.title}</h1>
                             <SCSubname onClick={() => goToProduct(p.id)}>{p.model}</SCSubname>
                             <p><SCSubtitle>Price: </SCSubtitle>{p.price}</p>
+                            <p>{p.quantity} {p.quantity === 1 ? 'item available' : 'items available'}</p>
                         </SCContainerInfos>
                         <SCDelete onClick={() => deleteProduct(p.id)}/>
                     </SCProducts>
@@ -197,8 +208,6 @@ const SCContainerInfos = styled.div`
         font-weight: 700;
 
         margin-bottom: 5px;
-
-        margin-top: 10px;
     }
 
     p{
