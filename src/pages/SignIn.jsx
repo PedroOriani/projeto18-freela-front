@@ -1,14 +1,20 @@
 import { styled } from "styled-components";
 import logo from '../assets/logo.png'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function SignIn(){
+export default function SignIn(props){
+
+    const { setAdd } = props
 
     const navigateTo = useNavigate();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    useEffect(() => {
+        setAdd(0)
+    }, [])
 
     function logIn(e){
         e.preventDefault()
@@ -59,7 +65,7 @@ const SCContainer = styled.div`
 `
 
 const SCTitle = styled.p`
-    font-weight: 600;
+    font-weight: 400;
     font-size: 65px;
     font-family: 'RetroVintage';
 

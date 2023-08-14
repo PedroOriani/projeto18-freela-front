@@ -6,18 +6,30 @@ import { useNavigate } from 'react-router-dom';
 import {BsFillPlusCircleFill} from 'react-icons/bs'
 
 
-export default function Footer(){
+export default function Footer(props){
+
+    const { add, setAdd } = props
 
     const navigateTo = useNavigate();
 
+    function goHome(){
+        navigateTo('/')
+    }
+
     function goToAccount(){
-        navigateTo('/user')
+        navigateTo('/products/me')
+    }
+
+    function addP(){
+        if (add !== 3){
+            setAdd(1)
+        }
     }
 
     return(
         <SCContainer>
-            <SCHome />
-            <SCAdd />
+            <SCHome onClick={goHome}/>
+            <SCAdd onClick={addP}/>
             <SCMyAccount onClick={goToAccount}/>
         </SCContainer>
     );

@@ -1,9 +1,15 @@
 import { styled } from "styled-components"
 import { BiLogOut } from 'react-icons/bi'
 import logo from '../assets/logo.png'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Header(){
+
+    const navigateTo = useNavigate();
+
+    function goHome(){
+        navigateTo('/')
+    }
 
     const nome = 'Pedro'
 
@@ -12,8 +18,8 @@ export default function Header(){
     return(
         <SCContainer>
             {token === 1 ? 
-            <SCSubContainer><SCLogo src={logo}/><SCWelcome>Bem vindo, {nome}</SCWelcome><SCLogOut /></SCSubContainer> : 
-            <SCSubContainer><SCLogo src={logo}/><SCWelcome>E - Market</SCWelcome><SCSign to={'/signin'}>Sign In</SCSign></SCSubContainer>}            
+            <SCSubContainer><SCLogo src={logo} onClick={goHome}/><SCWelcome>Bem vindo, {nome}</SCWelcome><SCLogOut /></SCSubContainer> : 
+            <SCSubContainer><SCLogo src={logo} onClick={goHome}/><SCWelcome>E - Market</SCWelcome><SCSign to={'/signin'}>Sign In</SCSign></SCSubContainer>}            
         </SCContainer>
     ); 
 }

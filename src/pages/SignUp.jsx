@@ -1,10 +1,12 @@
 import { styled } from "styled-components";
 import logo from '../assets/logo.png'
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
-export default function SignUp(){
+export default function SignUp(props){
+
+    const { setAdd } = props
 
     const navigateTo = useNavigate();
 
@@ -12,7 +14,14 @@ export default function SignUp(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [CPF, setCPF] = useState("");
     const [phone, setPhone] = useState("");
+    const [city, setCity] = useState("");
+    const [state, setState] = useState("");
+
+    useEffect(() => {
+        setAdd(0)
+    }, [])
 
     function register(e){
         e.preventDefault();
@@ -48,6 +57,27 @@ export default function SignUp(){
                         onChange={e => setPhone(e.target.value)}
                     />
                     <SCInput
+                        name="CPF"
+                        placeholder="CPF"
+                        type="text"
+                        value={CPF}
+                        onChange={e => setCPF(e.target.value)}
+                    />
+                    <SCInput
+                        name="city"
+                        placeholder="City"
+                        type="text"
+                        value={city}
+                        onChange={e => setCity(e.target.value)}
+                    />
+                    <SCInput
+                        name="state"
+                        placeholder="State (Sigla)"
+                        type="tel"
+                        value={state}
+                        onChange={e => setState(e.target.value)}
+                    />
+                    <SCInput
                         name="password"
                         placeholder="Password"
                         type="password"
@@ -78,7 +108,8 @@ const SCContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+
+    padding-top: 30px;
 
     background-color: #eeeeee;
 `
@@ -89,6 +120,8 @@ const SCTitle = styled.p`
     font-family: 'RetroVintage';
 
     color: #d19300;
+
+    top: 0px;
 `
 
 const SCSubTitle = styled.p`
@@ -96,7 +129,7 @@ const SCSubTitle = styled.p`
     font-size: 20px;
     font-family: 'RetroVintage';
 
-    margin-top: 25px;
+    margin-top: 15px;
 `
 
 const SCLogo = styled.img`
@@ -107,7 +140,7 @@ const SCLogo = styled.img`
 `
 
 const SCForm = styled.form`
-    height: 200px;
+    height: 300px;
 
     display: flex;
     flex-direction: column;

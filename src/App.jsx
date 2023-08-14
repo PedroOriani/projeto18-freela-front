@@ -8,14 +8,16 @@ import MyProducts from './pages/MyProducts';
 
 function App() {
 
+  const [add, setAdd] = useState(0)
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<HomePage />}/>
-        <Route path='/signup' element={<SignUp />}/>
-        <Route path='/signin' element={<SignIn />}/>
-        <Route path='/product/:id' element={<Product />}/>
-        <Route path='/products/me' element={<MyProducts />}/>
+        <Route path='/' element={<HomePage add={add} setAdd={setAdd}/>}/>
+        <Route path='/signup' element={<SignUp setAdd={setAdd}/>}/>
+        <Route path='/signin' element={<SignIn setAdd={setAdd}/>}/>
+        <Route path='/product/:id' element={<Product setAdd={setAdd}/>}/>
+        <Route path='/products/me' element={<MyProducts add={add} setAdd={setAdd}/>}/>
       </Routes>
     </BrowserRouter>
   )
