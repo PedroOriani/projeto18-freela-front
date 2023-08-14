@@ -10,8 +10,6 @@ export default function Product(props){
 
     const { setAdd } = props
 
-    const navigateTo = useNavigate();
-
     const params = useParams();
 
     useEffect(() => {
@@ -21,22 +19,14 @@ export default function Product(props){
     const [product, setProduct] = useState([])
   
     function loadProduct() {
-        const promise = axios.get(`${import.meta.env.VITE_API_URL}/product/${params.id}`)
+        const promise = axios.get(`${import.meta.env.VITE_API_URL}/products/${params.id}`)
         promise.then(resposta => {
-            console.log(resposta.data)
-            setProduct(resposta.data)
+            setProduct(resposta.data);
         })
         promise.catch((erro) => alert(erro.response.data))
     }
 
     useEffect(loadProduct, [])
-
-    // const price = product.price.replace('R$ ', '');
-    // const numPrice = Number(price).toFixed(2);
-
-    // const parcela = 'R$ ' + ((numPrice + 5)/6).toFixed(2);
-
-    // const parcelaF = parcela.replace('.', ',');
 
     return(
         <SCContainer>
@@ -44,16 +34,13 @@ export default function Product(props){
             <SCProduct>
                 <SCTitle>{product.title}</SCTitle>
                 <SCSubTitle>{product.model}</SCSubTitle>
-                <SCImage src={product.image} />
+                <SCImage src={product.photo} />
                 <SCDescription>{product.description}</SCDescription>
                     <SCDivisor>
-                        <div>
-                            <SCPrice>{product.price}</SCPrice>
-                            <SCParcela>Em até 6x de {product.price}</SCParcela>
-                        </div>
+                        <SCPrice>{product.price}</SCPrice>                            
                         <SCQuantity>{product.quantity} items available</SCQuantity>
                     </SCDivisor>
-                <SCSeller>Vendido por {product.owner}</SCSeller>                
+                <SCSeller>Vendido por {product.ownerName}</SCSeller>                
                 <SCContactData>
                     <SCContact>{product.phone}</SCContact>
                     <SCAdress>{product.address}</SCAdress>
@@ -109,7 +96,7 @@ const SCSubTitle = styled.p`
 
 const SCImage = styled.img`
     width: 100%;
-    height: 350px;
+    height: 300px;
 
     border-radius: 5px;
     border: none;
@@ -126,7 +113,7 @@ const SCDescription = styled.p`
 
     color: #474a51;
 
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 `
 
 const SCDivisor = styled.div`
@@ -134,7 +121,7 @@ const SCDivisor = styled.div`
     justify-content: space-between;
     align-items: center;
 
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 `
 
 const SCPrice = styled.p`
@@ -145,18 +132,6 @@ const SCPrice = styled.p`
     line-height: 20px;
 
     color: #202124;
-
-    margin-bottom: 3px;
-`
-
-const SCParcela = styled.p`
-    font-family: 'Montserrat', sans-serif;
-    
-    font-size: 13px;
-    font-weight: 500;
-    line-height: 20px;
-
-    color: #202124;    
 `
 
 const SCQuantity = styled.p`
