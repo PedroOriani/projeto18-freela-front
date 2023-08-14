@@ -6,12 +6,14 @@ import Footer from "../components/Footer";
 import { FaTrashAlt } from 'react-icons/fa'
 import AddProduct from "../components/AddProduct";
 import axios from "axios";
+import loadingGif from '../assets/loading.gif'
 
 
 export default function MyProducts(props){
 
     const { add, setAdd } = props
 
+    const [loading, setLoading] = useState(0)
     const [products, setProducts] = useState([]);
 
     const token = JSON.parse(sessionStorage.getItem("token"));
@@ -32,8 +34,12 @@ export default function MyProducts(props){
         const promise = axios.get(`${import.meta.env.VITE_API_URL}/myproducts`, config)
         promise.then(resposta => {
             setProducts(resposta.data)
+            setLoading(1)
         })
-        promise.catch((erro) => console.log(erro.response.data))
+        promise.catch((erro) => {
+            console.log(erro.response.data)
+            setLoading(1)
+        })
     }
 
     useEffect(loadProducts, [])
@@ -51,6 +57,16 @@ export default function MyProducts(props){
 
     function goToProduct(id){
         navigateTo(`/product/${id}`)
+    }
+
+    if(loading === 0){
+        return (
+            <SCContainer>
+                <Header />
+                <SCLoading src={loadingGif}/>
+                <Footer />
+            </SCContainer>
+        )
     }
 
     return(
@@ -95,6 +111,13 @@ const SCContainer = styled.div`
     justify-content: space-between;
 
     opacity: ${props => props.add === 1 ? 0.3 : 1};
+`
+
+const SCLoading = styled.img`
+    width: 150px;
+
+    margin-left: calc(50% - 75px);
+    margin-top: 130px;
 `
 
 const SCMyProducts = styled.p`

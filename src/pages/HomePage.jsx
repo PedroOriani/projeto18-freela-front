@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AddProduct from "../components/AddProduct";
 import axios from "axios";
+import loading from '../assets/loading.gif'
 
 
 export default function HomePage(props){
@@ -26,6 +27,16 @@ export default function HomePage(props){
     }
 
     useEffect(loadProducts, [])
+
+    if (products.length === 0 ){
+        return (
+            <SCContainer>
+                <Header />
+                <SCLoading src={loading}/>
+                <Footer />
+            </SCContainer>
+        )
+    }
 
     return(
         <>
@@ -65,6 +76,13 @@ const SCContainer = styled.div`
     justify-content: space-between;
 
     opacity: ${props => props.add === 1 ? 0.3 : 1};
+`
+
+const SCLoading = styled.img`
+    width: 150px;
+
+    margin-left: calc(50% - 75px);
+    margin-top: 130px;
 `
 
 const SCProducts = styled(Link)`
